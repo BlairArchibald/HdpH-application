@@ -256,79 +256,79 @@ main = do
                           (sum_totient [upper, upper - 1 .. lower])
               putStrLn $
                 "{v0} sum $ map totient [" ++ show lower ++ ".." ++
-                show upper ++ "] = " ++ show x ++
-                " {runtime=" ++ show t ++ "}"
+                show upper ++ "] = " ++ show x
+              putStrLn $ "RUNTIME: " ++ show t
       1 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (par_sum_totient_chunked lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v1, chunksize=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v1, chunksize=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       2 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (dist_sum_totient_chunked lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v2, chunksize=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v2, chunksize=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       3 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (farm_sum_totient_chunked lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v3, chunksize=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v3, chunksize=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       4 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (chunkfarm_sum_totient lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v4, chunksize=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v4, chunksize=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       5 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (par_sum_totient_sliced lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v5, slices=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v5, slices=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       6 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (dist_sum_totient_sliced lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v6, slices=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v6, slices=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       7 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (farm_sum_totient_sliced lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v7, slices=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v7, slices=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
       8 -> do (output, t) <- timeIO $ evaluate =<< runParIO conf
                                (slicefarm_sum_totient lower upper gran_arg)
               case output of
-                Just x  -> putStrLn $
-                             "{v8, slices=" ++ show gran_arg ++ "} " ++
+                Just x  -> do
+                  putStrLn $ "{v8, slices=" ++ show gran_arg ++ "} " ++
                              "sum $ map totient [" ++ show lower ++ ".." ++
-                             show upper ++ "] = " ++ show x ++
-                             " {runtime=" ++ show t ++ "}"
+                             show upper ++ "] = " ++ show x
+                  putStrLn $ "RUNTIME: " ++ show t
                 Nothing -> return ()
 
       _ -> return ()
