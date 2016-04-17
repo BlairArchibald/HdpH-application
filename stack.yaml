@@ -11,7 +11,7 @@ packages:
     commit: c2a316dc93a6d666e5cae61d5676f6a3ec5a7f83
 - location:
     git: git@github.com:BlairArchibald/HdpH.git
-    commit: 7f7c52fbb01537f36f269c660504f8dff20368c8
+    commit: ac4a8c981c3d2d69d7ba9784881d546a867d15f1
   subdirs:
   - hdph
   - hdph-closure

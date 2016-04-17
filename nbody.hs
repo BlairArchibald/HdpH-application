@@ -16,8 +16,8 @@ import Control.DeepSeq (NFData(..), deepseq)
 import Data.List (stripPrefix)
 import Data.List (delete, foldl', tails, transpose)
 import Data.Monoid (mconcat)
-import Data.Serialize (Serialize)
-import qualified Data.Serialize (put, get)
+import Data.Binary (Binary)
+import qualified Data.Binary (put, get)
 import Data.Time.Clock (NominalDiffTime, diffUTCTime, getCurrentTime)
 import System.Environment (getArgs)
 import System.IO (stdout, stderr, hSetBuffering, BufferMode(..))
@@ -52,13 +52,13 @@ data Vector3 = V3 {-# UNPACK #-} !Double
 instance NFData Vector3 where
   rnf (V3 x y z) = rnf x `seq` rnf y `seq` rnf z
 
-instance Serialize Vector3 where
-  put (V3 x y z) = Data.Serialize.put x >>
-                   Data.Serialize.put y >>
-                   Data.Serialize.put z
-  get = do x <- Data.Serialize.get
-           y <- Data.Serialize.get
-           z <- Data.Serialize.get
+instance Binary Vector3 where
+  put (V3 x y z) = Data.Binary.put x >>
+                   Data.Binary.put y >>
+                   Data.Binary.put z
+  get = do x <- Data.Binary.get
+           y <- Data.Binary.get
+           z <- Data.Binary.get
            return $ V3 x y z
 
 
@@ -113,11 +113,11 @@ instance Eq Body where
 instance NFData Body where
   rnf body = rnf (pos body) `seq` rnf (mass body)
 
-instance Serialize Body where
-  put body = Data.Serialize.put (pos body) >>
-             Data.Serialize.put (mass body)
-  get = do x <- Data.Serialize.get
-           m <- Data.Serialize.get
+instance Binary Body where
+  put body = Data.Binary.put (pos body) >>
+             Data.Binary.put (mass body)
+  get = do x <- Data.Binary.get
+           m <- Data.Binary.get
            return $ Body { pos = x, mass = m }
 
 
