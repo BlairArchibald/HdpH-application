@@ -5,6 +5,7 @@
 
 {-# LANGUAGE FlexibleInstances #-}  -- req'd for some ToClosure instances
 {-# LANGUAGE TemplateHaskell #-}    -- req'd for mkClosure, etc
+{-# LANGUAGE DeriveGeneric #-}
 
 module Main where
 
@@ -16,12 +17,13 @@ import Control.DeepSeq (NFData(..), deepseq)
 import Data.List (stripPrefix)
 import Data.List (delete, foldl', tails, transpose)
 import Data.Monoid (mconcat)
-import Data.Binary (Binary)
-import qualified Data.Binary (put, get)
+import Data.Binary.Serialise.CBOR (Serialise, encode, decode)
 import Data.Time.Clock (NominalDiffTime, diffUTCTime, getCurrentTime)
 import System.Environment (getArgs)
 import System.IO (stdout, stderr, hSetBuffering, BufferMode(..))
 import System.Random (mkStdGen, setStdGen, randomIO)
+
+import GHC.Generics (Generic)
 
 import Control.Parallel.HdpH 
        (RTSConf(..), defaultRTSConf, updateConf,
@@ -47,20 +49,12 @@ type Scalar = Double
 data Vector3 = V3 {-# UNPACK #-} !Double
                   {-# UNPACK #-} !Double
                   {-# UNPACK #-} !Double
-             deriving (Eq, Show)
+             deriving (Eq, Show, Generic)
 
 instance NFData Vector3 where
   rnf (V3 x y z) = rnf x `seq` rnf y `seq` rnf z
 
-instance Binary Vector3 where
-  put (V3 x y z) = Data.Binary.put x >>
-                   Data.Binary.put y >>
-                   Data.Binary.put z
-  get = do x <- Data.Binary.get
-           y <- Data.Binary.get
-           z <- Data.Binary.get
-           return $ V3 x y z
-
+instance Serialise Vector3 where
 
 randomVector3 :: IO Vector3
 randomVector3 = do x <- randomIO
@@ -105,7 +99,7 @@ k *. (V3 x1 x2 x3) = V3 (k * x1) (k * x2) (k * x3)
 data Body = Body {
               pos  :: {-# UNPACK #-} !Vector3,  -- position [m]
               mass :: {-# UNPACK #-} !Scalar }  -- mass [kg]
-            deriving (Show)
+            deriving (Show, Generic)
 
 instance Eq Body where
   body1 == body2 = pos body1 == pos body2
@@ -113,13 +107,7 @@ instance Eq Body where
 instance NFData Body where
   rnf body = rnf (pos body) `seq` rnf (mass body)
 
-instance Binary Body where
-  put body = Data.Binary.put (pos body) >>
-             Data.Binary.put (mass body)
-  get = do x <- Data.Binary.get
-           m <- Data.Binary.get
-           return $ Body { pos = x, mass = m }
-
+instance Serialise Body where
 
 -- velocity [m/s]
 type Vel = Vector3

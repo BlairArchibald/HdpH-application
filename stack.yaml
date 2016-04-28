@@ -10,8 +10,11 @@ packages:
     git: git@github.com:haskell-distributed/network-transport-tcp.git
     commit: c2a316dc93a6d666e5cae61d5676f6a3ec5a7f83
 - location:
+    git: https://github.com/well-typed/binary-serialise-cbor.git
+    commit: 2ffa6354db041fc32d607f3d50d68ee8b340d11d
+- location:
     git: git@github.com:BlairArchibald/HdpH.git
-    commit: ac4a8c981c3d2d69d7ba9784881d546a867d15f1
+    commit: 5923400fdcdec7afe4102462ca51782d664893fd
   subdirs:
   - hdph
   - hdph-closure
@@ -20,7 +23,9 @@ packages:
 extra-deps: []
 
 # Override default flag values for local packages and extra-deps
-flags: {}
+flags:
+  binary-serialise-cbor:
+    newtime15: true
 
 # Extra package databases containing global packages
 extra-package-dbs: []
