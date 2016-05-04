@@ -223,6 +223,15 @@ Executable sum-liouville
                    hdph-closure >= 0.2.0 && < 0.3
   ghc-options:     -Wall -threaded -rtsopts -O2
 
+Executable pingpong
+  main-is:         pingpong.hs
+  build-depends:   template-haskell,
+                   base >= 4 && < 5,
+                   clock >= 0.6 && < 0.7,
+                   hdph == 0.2.3,
+                   hdph-closure >= 0.2.0 && < 0.3
+  ghc-options:     -Wall -threaded -rtsopts -O2
+
 -- Executable mandel
 --   main-is:         mandel.hs
 --   build-depends:   template-haskell,
